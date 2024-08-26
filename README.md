@@ -39,7 +39,7 @@ Output: 0.5068928345037831
 #### Scenario II
 A larger dataset of clusters simulated with Clust_Sim-SMLM are shown:
 <p align="center">
-  <img width="300" height="300" src=https://github.com/user-attachments/assets/acd7adee-9416-4a61-bfa0-caebf540097b
+  <img width="400" height="300" src=https://github.com/user-attachments/assets/acd7adee-9416-4a61-bfa0-caebf540097b
 </p>
 ```
 score = DBCV_Score(X,labels)
