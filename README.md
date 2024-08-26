@@ -17,9 +17,11 @@ pip install ....?
 ```
 
 ## Usage
-To score clustering scenarioss, the following libraries are used:
+To score clustering scenarios, the following libraries are used:
 - scikit-learn
 - Clust_Sim-SMLM
+For visualization:
+- matplotlib
  
 ### DBCV Score
 #### Simple Scenario
