@@ -1,13 +1,13 @@
-# Draft-DBCV
+DBCV
 
-DBCV* is an efficient python implementation of the density based cluster validation (DBCV) score proposed by Moulavi et al. (2014). 
+DBCV is an efficient python implementation of the density based cluster validation (DBCV) score proposed by Moulavi et al. (2014). 
 
 ## Getting Started
 ### Dependencies
 - SciPy
 - NumPy
 ### Installation
-DBCV* can be installed via pip:
+DBCV can be installed via pip:
 ```
 pip install ....?
 ```
@@ -44,7 +44,7 @@ A larger dataset of clusters simulated with Clust_Sim-SMLM are shown:
 </p>
  
 ```
-score = DBCV_Score(X,labels)
+score = DBCV_score(X,labels)
 ```
 Output: 0.6171526846848352
 
@@ -62,9 +62,9 @@ Individual cluster scores are visualized by color below:
 </p>
 
 ### Memory cutoff
-Currently, DBCV* memory scales with the number of points in an individual cluster. A memory cutoff is necessary and should be set dependent on the machine being used. The default is set to a maximum of 15000 points allowed in a single cluster. The score will output an error when an individual cluster exceeds this cutoff.
+Currently, DBCV memory scales with the number of points in an individual cluster. A memory cutoff is necessary and should be set dependent on the machine being used. The default is set to a maximum of 15000 points allowed in a single cluster. The score will output an error when an individual cluster exceeds this cutoff.
 ```
-score = DBCV_Score(X,labels, memory_cutoff = 10)
+score = DBCV_score(X,labels, memory_cutoff = 10)
 ```
 Output: Memory cutoff reached: automatically assigned a score of -1. Increase mem_cutoff to attempt to score.
 
