@@ -4,7 +4,7 @@ DBCV* is a high speed implementation of the density based cluster validation des
 
 ## Getting Started
 ### Dependencies
-- sci-kit learn
+- scipy
 - numpy
 ### Installation
 DBCV* can be installed via pip:
