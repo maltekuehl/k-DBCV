@@ -28,7 +28,7 @@ For visualization:
 #### Simple Scenario
 The half moons dataset simulated from scikit-learn is shown:
 <p align="center">
-  <img width="300" height="300" src=https://github.com/user-attachments/assets/af775272-3d67-4dbc-9aa7-286bb5464a8d
+  <img width="600" height="300" src=https://github.com/user-attachments/assets/22c7c5c3-dcf1-47d4-86fd-53f428e7f87b
 </p>
 
 ```
