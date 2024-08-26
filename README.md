@@ -1,6 +1,6 @@
 # Draft-DBCV
 
-DBCV* is a high speed implementation of the density based cluster validation designed (DBCV) method proposed by et al. 
+DBCV* is an efficient implementation of the density based cluster validation designed (DBCV) method proposed by Moulavi et al. (2014). 
 
 ## Getting Started
 ### Dependencies
@@ -29,10 +29,16 @@ pip install ....?
 
 ```
 ## Relevant Citations
+Density Based Cluster Validation:
+Moulavi, D., Jaskowiak, P. A., Campello, R. J. G. B., Zimek, A. & Sander, J. Density-based clustering validation. SIAM Int. Conf. Data Min. 2014, SDM 2014 2, 839–847 (2014)
 
+First implementation of this implementation:
+...Our citation here
 ## License
 
 ## Referencing
+In addition to citing Moulavi et al., if you use this repository, please cite:
+...Our citation here
 
 ## Contact 
 
