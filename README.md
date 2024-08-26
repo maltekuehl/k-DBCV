@@ -37,32 +37,34 @@ DBCV_Score(X,labels)
 Output: 0.5068928345037831
 
 #### Scenario II
-More complex clusters simulated with Clust_Sim-SMLM are shown:
-
-
+A larger dataset of clusters simulated with Clust_Sim-SMLM are shown:
+<p align="center">
+  <img width="300" height="300" src=https://github.com/user-attachments/assets/acd7adee-9416-4a61-bfa0-caebf540097b
+</p>
 ```
 score = DBCV_Score(X,labels)
 ```
-Output:
+Output: 0.6171526846848352
 
 ### Extracting Individual Cluster Scores
 DBCV* enables individual cluster score extraction where each cluster is assigned a score:
 Individual Cluster Score = Sep-Sparse/Sep
+
+By default, ind_clust_scores is set to False
 ```
-score, ind_clust_score_array = DBCV_Score(X,labels, ind_clust_scores)
+score, ind_clust_score_array = DBCV_Score(X,labels, ind_clust_scores = True)
 ```
-Individual cluster scores are visualized below:
+Individual cluster scores are visualized by color below:
+<p align="center">
+  <img width="300" height="300" src=https://github.com/user-attachments/assets/56cd291a-9991-45d9-8dd7-cd132ec823fb
+</p>
 
 ### Memory cutoff
-Currently, DBCV* memory scales with individual cluster sizes. Thus, a memory cutoff is necessary and should be set dependent on the machine being used. The default is set to a maximum of 15000 points allowed in a single cluster. 
-```
-score = DBCV_Score(X,labels, memory_cutoff = 15000)
-```
-Output:
+Currently, DBCV* memory scales with the number of points in an individual cluster. A memory cutoff is necessary and should be set dependent on the machine being used. The default is set to a maximum of 15000 points allowed in a single cluster. The score will output an error when an individual cluster exceeds this cutoff.
 ```
 score = DBCV_Score(X,labels, memory_cutoff = 10)
 ```
-Output:
+Output: 
 
 ## Relevant Citations
 #### Density Based Cluster Validation
