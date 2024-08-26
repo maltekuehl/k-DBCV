@@ -22,7 +22,8 @@ To score clustering scenarioss, the following libraries are used:
 - Clust_Sim-SMLM
  
 ### DBCV Score
-For a simple example, the half moons dataset is shown:
+#### Simple Scenario
+The half moons dataset simulated from scikit-learn is shown:
 
 ![image](https://github.com/user-attachments/assets/af775272-3d67-4dbc-9aa7-286bb5464a8d)
 
@@ -31,6 +32,7 @@ DBCV_Score(X,labels)
 ```
 Output: 0.5068928345037831
 
+#### Scenario II
 More complex clusters simulated with Clust_Sim-SMLM are shown:
 
 
