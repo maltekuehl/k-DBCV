@@ -38,9 +38,11 @@ Output: 0.5068928345037831
 
 #### Scenario II
 A larger dataset of clusters simulated with Clust_Sim-SMLM are shown:
+
 <p align="center">
-  <img width="400" height="300" src=https://github.com/user-attachments/assets/acd7adee-9416-4a61-bfa0-caebf540097b
+  <img width="300" height="300" src=https://github.com/user-attachments/assets/acd7adee-9416-4a61-bfa0-caebf540097b
 </p>
+ 
 ```
 score = DBCV_Score(X,labels)
 ```
@@ -56,7 +58,7 @@ score, ind_clust_score_array = DBCV_Score(X,labels, ind_clust_scores = True)
 ```
 Individual cluster scores are visualized by color below:
 <p align="center">
-  <img width="300" height="300" src=https://github.com/user-attachments/assets/56cd291a-9991-45d9-8dd7-cd132ec823fb
+  <img width="400" height="300" src=https://github.com/user-attachments/assets/56cd291a-9991-45d9-8dd7-cd132ec823fb
 </p>
 
 ### Memory cutoff
