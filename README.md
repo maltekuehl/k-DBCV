@@ -20,6 +20,7 @@ pip install ....?
 To score clustering scenarios, the following libraries are used:
 - scikit-learn
 - Clust_Sim-SMLM
+
 For visualization:
 - matplotlib
  
