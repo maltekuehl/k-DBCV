@@ -66,7 +66,7 @@ Currently, DBCV* memory scales with the number of points in an individual cluste
 ```
 score = DBCV_Score(X,labels, memory_cutoff = 10)
 ```
-Output: 
+Output: Memory cutoff reached: automatically assigned a score of -1. Increase mem_cutoff to attempt to score.
 
 ## Relevant Citations
 #### Density Based Cluster Validation
