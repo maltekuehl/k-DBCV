@@ -58,7 +58,7 @@ score, ind_clust_score_array = DBCV_Score(X,labels, ind_clust_scores = True)
 ```
 Individual cluster scores are visualized by color below:
 <p align="center">
-  <img width="400" height="300" src=https://github.com/user-attachments/assets/56cd291a-9991-45d9-8dd7-cd132ec823fb
+  <img width="350" height="300" src=https://github.com/user-attachments/assets/56cd291a-9991-45d9-8dd7-cd132ec823fb
 </p>
 
 ### Memory cutoff
