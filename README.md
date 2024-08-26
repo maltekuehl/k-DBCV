@@ -1,8 +1,37 @@
 # Draft-DBCV
-High speed implementation of Density Based Cluster Validation (DBCV)
 
-hDBCV is an efficient implementation of the Density Based Cluster Validation first reported by et al. 
-cite here
+DBCV* is a high speed implementation of the density based cluster validation designed (DBCV) method proposed by et al. 
 
+## Getting Started
+### Dependencies
+- sci-kit learn
+- numpy
+### Installation
+DBCV* can be installed via pip:
+```
+pip install ....?
+```
+or
+```
+pip install ....?
+```
 
-This python implementation relies on a KD-tree to efficiently calculate cluster separations and sparsenes
+## Usage
+### DBCV Score
+
+```
+
+```
+
+### Extracting Individual Cluster Scores
+
+```
+
+```
+
+## License
+
+## Referencing
+
+## Contact 
+
