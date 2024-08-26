@@ -27,8 +27,9 @@ For visualization:
 ### DBCV Score
 #### Simple Scenario
 The half moons dataset simulated from scikit-learn is shown:
-
-![image](https://github.com/user-attachments/assets/af775272-3d67-4dbc-9aa7-286bb5464a8d)
+<p align="center">
+  <img width="300" height="300" src=https://github.com/user-attachments/assets/af775272-3d67-4dbc-9aa7-286bb5464a8d
+</p>
 
 ```
 DBCV_Score(X,labels)
