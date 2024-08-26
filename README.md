@@ -65,18 +65,18 @@ score = DBCV_Score(X,labels, memory_cutoff = 10)
 Output:
 
 ## Relevant Citations
-### Density Based Cluster Validation
+#### Density Based Cluster Validation
 
 Moulavi, D., Jaskowiak, P. A., Campello, R. J. G. B., Zimek, A. & Sander, J. Density-based clustering validation. SIAM Int. Conf. Data Min. 2014, SDM 2014 2, 839–847 (2014)
 
-### First implementation of this implementation
+#### First implementation of this implementation
 ...Our citation here
 
 ## License
 DBCV* is licensed with an MIT license. See LICENSE file for more information.
 
 ## Referencing
-In addition to citing Moulavi et al., if you use this repository, please cite:
+#### In addition to citing Moulavi et al., if you use this repository, please cite:
 ...Our citation here
 
 ## Contact 
