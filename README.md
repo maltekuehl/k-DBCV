@@ -4,8 +4,8 @@ DBCV* is an efficient python implementation of the density based cluster validat
 
 ## Getting Started
 ### Dependencies
-- scipy
-- numpy
+- SciPy
+- NumPy
 ### Installation
 DBCV* can be installed via pip:
 ```
@@ -17,17 +17,46 @@ pip install ....?
 ```
 
 ## Usage
+To score clustering scenarioss, the following libraries are used:
+- scikit-learn
+- Clust_Sim-SMLM
+ 
 ### DBCV Score
+For a simple example, the half moons dataset is shown:
+
+![image](https://github.com/user-attachments/assets/af775272-3d67-4dbc-9aa7-286bb5464a8d)
 
 ```
+DBCV_Score(X,labels)
+```
+Output: 0.5068928345037831
+
+More complex clusters simulated with Clust_Sim-SMLM are shown:
+
 
 ```
+score = DBCV_Score(X,labels)
+```
+Output:
 
 ### Extracting Individual Cluster Scores
-
+DBCV* enables individual cluster score extraction where each cluster is assigned a score:
+Individual Cluster Score = Sep-Sparse/Sep
 ```
-
+score, ind_clust_score_array = DBCV_Score(X,labels, ind_clust_scores)
 ```
+Individual cluster scores are visualized below:
+
+### Memory cutoff
+Currently, DBCV* memory scales with individual cluster sizes. Thus, a memory cutoff is necessary and should be set dependent on the machine being used. The default is set to a maximum of 15000 points allowed in a single cluster. 
+```
+score = DBCV_Score(X,labels, memory_cutoff = 15000)
+```
+Output:
+```
+score = DBCV_Score(X,labels, memory_cutoff = 10)
+```
+Output:
 
 ## Relevant Citations
 Density Based Cluster Validation:
