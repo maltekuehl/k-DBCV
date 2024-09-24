@@ -82,7 +82,7 @@ def intracluster_analysis(
     N_clust,
     cluster_groups,
     d,
-    mem_cutoff=15000
+    mem_cutoff
 ):
 
     core_dists_arr = []
@@ -93,7 +93,9 @@ def intracluster_analysis(
         cluster = cluster_groups[i][:, :-1]
         cluster_length = len(cluster)
 
-        if cluster_length > mem_cutoff:
+        # Memory required for array of 64-bit floats in GB, with a buffer added
+        mem_alloc_predict = (((cluster_length**2) * 8)/ 1024**3) * 8
+        if mem_alloc_predict > mem_cutoff:
             return 'not enough memory', 0, 0, 0
         
         intraclustmatrix_condensed = pdist(cluster, metric='euclidean') 
@@ -289,7 +291,7 @@ def DBCV_score(
     X,
     labels, 
     ind_clust_scores=False, 
-    mem_cutoff=30000
+    mem_cutoff=25.0
 ):
     
     # Initially formats data for later calculations
