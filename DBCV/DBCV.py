@@ -2,15 +2,23 @@ import numpy as np
 from scipy.spatial.distance import pdist, squareform
 from scipy.sparse.csgraph import minimum_spanning_tree
 from scipy.spatial import cKDTree
-
+import numpy.typing as npt
+from typing import List, Tuple, Dict
 
 
 def format_data(
-    X,
-    labels
-):
+    X: npt.NDArray[np.float_],
+    labels: npt.NDArray[np.int_]
+) -> Tuple[
+    npt.NDArray[np.float_],
+    List[npt.NDArray[np.float_]],
+    npt.NDArray[np.int_],
+    int,
+    int,
+    int
+]:
 
-    n_samp = float(X.shape[0])
+    n_samp = X.shape[0]
 
     # Initial check if all data is noise
     if np.sum(labels) == -n_samp:
@@ -79,11 +87,16 @@ def format_data(
 
 # populate the dictionaries that store key values -> sparseness,mst etc.
 def intracluster_analysis(
-    N_clust,
-    cluster_groups,
-    d,
-    mem_cutoff
-):
+    N_clust: int,
+    cluster_groups: List[npt.NDArray[np.float_]],
+    d: int,
+    mem_cutoff: float
+) -> Tuple[
+    Dict[int, float],
+    npt.NDArray[np.float_],
+    Dict[int, npt.NDArray[np.float_]],
+    Dict[int, npt.NDArray[np.int_]]
+]:
 
     core_dists_arr = []
     core_dists_dict = {}
@@ -108,8 +121,8 @@ def intracluster_analysis(
         )
 
         intraclustmatrix = squareform(intraclustmatrix_condensed)
-        intraclust_MRD_matrix = np.maximum(max_core_dist_matrix ,intraclustmatrix) 
-        sparseness[i],core_pts[i] = MST_builder(intraclust_MRD_matrix)
+        intraclust_MRD_matrix = np.maximum(max_core_dist_matrix, intraclustmatrix) 
+        sparseness[i], core_pts[i] = MST_builder(intraclust_MRD_matrix)
         core_dists_dict[i] = all_pts_core_dists[core_pts[i]]
         core_dists_arr.append(core_dists_dict[i])
 
@@ -117,9 +130,10 @@ def intracluster_analysis(
 
 
 def all_points_core_distance(
-    distance_matrix_condensed,
-    d
-):
+    distance_matrix_condensed: npt.NDArray[np.float_],
+    d: int
+) -> npt.NDArray[np.float_]:
+
     distance_matrix_condensed[distance_matrix_condensed == 0] = np.inf
     distance_matrix_condensed = (1 / distance_matrix_condensed)**d
     distance_matrix = squareform(distance_matrix_condensed)
@@ -134,8 +148,8 @@ def all_points_core_distance(
   
 
 def MST_builder(
-    MRD_matrix
-):
+    MRD_matrix: npt.NDArray[np.float_]
+) -> Tuple[float, npt.NDArray[np.int_]]:
 
     MST_arr = minimum_spanning_tree(MRD_matrix).toarray()
     if np.sum(MST_arr) == 0:
@@ -155,10 +169,14 @@ def MST_builder(
     
 
 def core_points_analysis(
-    cluster_sort,
-    cluster_ind,
-    core_pts
-):
+    cluster_sort: npt.NDArray[np.float_],
+    cluster_ind: npt.NDArray[np.int_],
+    core_pts: npt.NDArray[np.int_]  
+) -> Tuple[
+    npt.NDArray[np.float_],
+    List[npt.NDArray[np.float_]],
+    npt.NDArray[np.int_]
+]:
 
     core_pts_arr = np.array(list(core_pts.values()), dtype=object)
 
@@ -182,12 +200,12 @@ def core_points_analysis(
 
 
 def intercluster_analysis(
-    core_X,
-    core_cluster_groups,
-    core_X_ind,
-    core_dists_arr,
-    core_dists_dict
-):
+    core_X: npt.NDArray[np.float_],
+    core_cluster_groups: List[npt.NDArray[np.float_]],
+    core_X_ind: npt.NDArray[np.int_],
+    core_dists_arr: npt.NDArray[np.float_],
+    core_dists_dict: Dict[int, npt.NDArray[np.float_]]
+) -> Dict[int, float]:
 
     separation = {}
 
@@ -258,13 +276,14 @@ def intercluster_analysis(
 
 
 def weighted_score(
-    sparseness,
-    separation,
-    N_clust,
-    cluster_groups,
-    n_samp, 
-    ind_clust_scores=False
-):
+    sparseness: Dict[int, float],
+    separation: Dict[int, float],
+    N_clust: int,
+    cluster_groups: List[npt.NDArray[np.float_]],
+    n_samp: int, 
+    ind_clust_scores: bool = False
+) -> float:
+
     # Add up all the weighted DBCV scores to get the total  
     
     cluster_score_set = []
@@ -277,7 +296,7 @@ def weighted_score(
         
         cluster_score_set.append(cluster_validity)
         cluster_size = len(cluster_groups[i])
-        DBCV_val += (cluster_size/n_samp) * cluster_validity
+        DBCV_val += (cluster_size / n_samp) * cluster_validity
 
     if ind_clust_scores == True:
         return DBCV_val, cluster_score_set  
@@ -288,11 +307,11 @@ def weighted_score(
             
 # main function
 def DBCV_score(
-    X,
-    labels, 
-    ind_clust_scores=False, 
-    mem_cutoff=25.0
-):
+    X: npt.NDArray[np.float_],
+    labels: npt.NDArray[np.int_],
+    ind_clust_scores: bool = False, 
+    mem_cutoff: float = 25.0
+) -> float:
     
     # Initially formats data for later calculations
     cluster_sort, cluster_groups, cluster_ind, n_samp, d, N_clust = format_data(
