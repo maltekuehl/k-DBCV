@@ -90,7 +90,6 @@ def intracluster_analysis(
     N_clust: int,
     cluster_groups: List[npt.NDArray[np.float_]],
     d: int,
-    mem_cutoff: float
 ) -> Tuple[
     Dict[int, float],
     npt.NDArray[np.float_],
@@ -104,13 +103,7 @@ def intracluster_analysis(
     sparseness = {}
     for i in range(N_clust):
         cluster = cluster_groups[i][:, :-1]
-        cluster_length = len(cluster)
 
-        # Memory required for array of 64-bit floats in GB, with a buffer added
-        mem_alloc_predict = (((cluster_length**2) * 8)/ 1024**3) * 8
-        if mem_alloc_predict > mem_cutoff:
-            return 'not enough memory', 0, 0, 0
-        
         intraclustmatrix_condensed = pdist(cluster, metric='euclidean') 
         all_pts_core_dists = all_points_core_distance(intraclustmatrix_condensed, d)
         all_core_dists_matrix = np.tile(
@@ -303,6 +296,18 @@ def weighted_score(
     else:
         return DBCV_val  
 
+def predict_memory_allocation(
+    labels: npt.NDArray[np.float_]
+    ) -> float:
+
+    l_vals, l_counts = np.unique(labels, return_counts=True)
+    if min(int(l_vals)) == -1:
+        max_cluster_size = max(l_counts[1:])
+    else:
+        max_cluster_size = max(l_counts)
+    predicted_memory = (((max_cluster_size**2) * 8) / 1024**3) * 8
+
+    return predicted_memory
 
             
 # main function
@@ -326,17 +331,17 @@ def DBCV_score(
             print('Not enough clusters: must have at least two. ')
         return -1, -1
 
+    #Handles memory cutoff
+    pred_mem_alloc = predict_memory_allocation(labels=cluster_sort[...,-1])
+    if pred_mem_alloc > mem_cutoff:
+        print('memory cutoff reached')
+        return -1,-1
+
     # Sparseness calculations for DBCV
     sparseness, core_dists_arr, core_dists_dict, core_pts = intracluster_analysis(
-        N_clust, cluster_groups, d, mem_cutoff
+        N_clust, cluster_groups, d, 
     )
     
-    # Handles memory cutoff
-    if sparseness == 'not enough memory':
-        print('Memory cutoff reached: automatically assigned a score of -1. '
-              'Increase mem_cutoff to attempt to score.'
-        )
-        return -1, -1
 
     # Formats core points for intercluster analysis        
     core_X, core_cluster_groups, core_X_ind = core_points_analysis(
