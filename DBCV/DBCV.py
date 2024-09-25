@@ -296,15 +296,13 @@ def weighted_score(
     else:
         return DBCV_val  
 
-def predict_memory_allocation(
-    labels: npt.NDArray[np.float_]
-    ) -> float:
 
-    l_vals, l_counts = np.unique(labels, return_counts=True)
-    if min(int(l_vals)) == -1:
-        max_cluster_size = max(l_counts[1:])
-    else:
-        max_cluster_size = max(l_counts)
+def predict_memory_allocation(
+    labels: npt.NDArray[np.int_]
+) -> float:
+
+    _, l_counts = np.unique(labels[labels >= 0], return_counts=True)
+    max_cluster_size = l_counts.max() if l_counts.size > 0 else 0
     predicted_memory = (((max_cluster_size**2) * 8) / 1024**3) * 8
 
     return predicted_memory
