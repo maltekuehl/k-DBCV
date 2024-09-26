@@ -3,16 +3,21 @@ from scipy.spatial.distance import pdist, squareform
 from scipy.sparse.csgraph import minimum_spanning_tree
 from scipy.spatial import cKDTree
 import numpy.typing as npt
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Optional
 
+# Flags indicating possible scoring outcomes
+_NOT_ENOUGH_CLUSTERS = -2
+_ALL_NOISE = -1
+_SUCCESS = 0
 
 def format_data(
     X: npt.NDArray[np.float_],
     labels: npt.NDArray[np.int_]
 ) -> Tuple[
-    npt.NDArray[np.float_],
-    List[npt.NDArray[np.float_]],
-    npt.NDArray[np.int_],
+    int,
+    Optional[npt.NDArray[np.float_]],
+    Optional[List[npt.NDArray[np.float_]]],
+    Optional[npt.NDArray[np.int_]],
     int,
     int,
     int
@@ -22,7 +27,7 @@ def format_data(
 
     # Initial check if all data is noise
     if np.sum(labels) == -n_samp:
-        return 'noise', 0, 0, 0, 0, 0
+        return _ALL_NOISE, None, None, None, 0, 0, 0
        
     d = X.shape[1] 
 
@@ -60,7 +65,7 @@ def format_data(
 
     # Checks if all data is now noise
     if np.sum(Xl_sort[..., -1]) == -n_samp:
-        return 'noise', 0, 0, 0, 0, 0
+        return _ALL_NOISE, None, None, None, 0, 0, 0
 
 
     if Xl_sort[..., -1][0] == -1:
@@ -80,9 +85,9 @@ def format_data(
 
     N_clust = len(cluster_groups)
     if N_clust < 2:
-        return 'not enough clusters', 0, 0, 0, 0, 0
+        return _NOT_ENOUGH_CLUSTERS, None, None, None, 0, 0, 0
 
-    return cluster_sort, cluster_groups, cluster_ind, n_samp, d, N_clust
+    return _SUCCESS, cluster_sort, cluster_groups, cluster_ind, n_samp, d, N_clust
 
 
 # populate the dictionaries that store key values -> sparseness,mst etc.
@@ -274,7 +279,7 @@ def weighted_score(
     N_clust: int,
     cluster_groups: List[npt.NDArray[np.float_]],
     n_samp: int, 
-    ind_clust_scores: bool = False
+    ind_clust_scores: bool
 ) -> float:
 
     # Add up all the weighted DBCV scores to get the total  
@@ -313,27 +318,40 @@ def DBCV_score(
     X: npt.NDArray[np.float_],
     labels: npt.NDArray[np.int_],
     ind_clust_scores: bool = False, 
-    mem_cutoff: float = 25.0
+    mem_cutoff: float = 25.0,
+    batch_mode = False
 ) -> float:
     
     # Initially formats data for later calculations
-    cluster_sort, cluster_groups, cluster_ind, n_samp, d, N_clust = format_data(
+    (
+        status, 
+        cluster_sort, 
+        cluster_groups, 
+        cluster_ind, 
+        n_samp, 
+        d, 
+        N_clust
+    ) = format_data(
         X, labels
     )
 
-    # Handles situations where scoring can not be performed
-    if type(cluster_sort) == str:
-        if cluster_sort == 'noise':
-            print('All points assigned to noise')
-        elif cluster_sort == 'not enough clusters':
-            print('Not enough clusters: must have at least two. ')
-        return -1, -1
+    # Early exits where scoring can not be performed
+    if status != 0:
+        if not batch_mode:
+            if status == _ALL_NOISE:
+                print('All points assigned to noise')
+            elif status == _NOT_ENOUGH_CLUSTERS:
+                print('Not enough clusters: must have at least two.')
+        
+        return (-1,-1) if ind_clust_scores else -1
 
-    #Handles memory cutoff
+    # Early exits due to exceeding memory cutoff
     pred_mem_alloc = predict_memory_allocation(labels=cluster_sort[...,-1])
     if pred_mem_alloc > mem_cutoff:
-        print('memory cutoff reached')
-        return -1,-1
+        if not batch_mode:
+            print('memory cutoff reached')
+
+        return (-1,-1) if ind_clust_scores else -1
 
     # Sparseness calculations for DBCV
     sparseness, core_dists_arr, core_dists_dict, core_pts = intracluster_analysis(
