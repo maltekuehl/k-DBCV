@@ -5,10 +5,12 @@ from scipy.spatial import cKDTree
 import numpy.typing as npt
 from typing import List, Tuple, Dict, Optional
 
+
 # Flags indicating possible scoring outcomes
 _NOT_ENOUGH_CLUSTERS = -2
 _ALL_NOISE = -1
 _SUCCESS = 0
+
 
 def format_data(
     X: npt.NDArray[np.float_],
@@ -22,6 +24,61 @@ def format_data(
     int,
     int
 ]:
+    """
+    Formats coordinates of clustered and noise points for DBCV scoring based
+    on labels.
+
+    Args:
+        X: npt.NDArray[np.float_]
+            An array of float coordinates with shape (N, d), where N is the total
+            number of points (clustered + noise) and d is the dimensionality of the
+            data.
+        
+        labels: npt.NDArray[np.int_]
+            An array of integer labels with shape (N,) where N is the total number
+            of points (clustered + noise). The labels map back to the points in X.
+            Cluster labels are consecutive integers in the range
+            [0, num_clusters - 1], while noise points are assigned a label of -1.
+
+    Returns:
+        Tuple containing:
+            - An integer status code indicating whether the data can be scored:
+              - _ALL_NOISE (int): Scoring is not possible because all points are
+                assigned to noise.
+              - _NOT_ENOUGH_CLUSTERS (int): Scoring is not possible because not enough
+                clusters were found.
+              - _SUCCESS (int): The data can be scored.
+            - A master array of float coordinates with shape (N, d + 1), where N is
+              the number of clustered points and d is the dimensionality of the data,
+              containing all clustered points and associated cluster labels. The
+              clustered points are contained in the first d columns, followed by the
+              labels in the last column. The array is sorted in ascending order by the
+              label column. Returns as None if the data cannot be scored.
+            - A list of arrays with len(list) = num_clusters. Each array contains the
+              coordinates corresponding to a specific cluster label, stored in
+              ascending order of labels. For example, list[0] contains the coordinates
+              belonging to cluster 0, list[1] contains cluster 1, etc. Arrays contain
+              floats and have shape (N, d + 1), where N is the number of points
+              belonging to the current cluster and d is the dimensionality. The first
+              d columns contain the coordinates while the last column contains the
+              label for the current cluster. Returns as None if the data cannot be
+              scored.
+            - An array of integer indices for quick lookup of clustered points in the 
+              sorted master array. The indices are stored as follows: [0,
+              start_index_1, start_index_2, ... start_index_last, end_index_last]. The
+              indices are structured such that master_arr[0:start_index_1] gives the
+              coordinates for cluster 0, master_arr[start_index_1:start_index_2] gives
+              the coordinates for cluster 2, etc. The first element in the list is
+              always 0, while the last element always defines the end index of the
+              final cluster label (num_cluster - 1). Returns as None if the data
+              cannot be scored.
+            - An integer representing the total number of coordinates (clustered +
+              noise). Returns 0 if data cannot be scored.
+            - An integer indicating the dimensionality of the coordinates. Returns 0
+              if data cannot be scored.
+            - An integer indicating the number of clusters. Returns 0 if data cannot
+              be scored.
+    """
 
     n_samp = X.shape[0]
 
