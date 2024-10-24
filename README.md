@@ -62,11 +62,10 @@ Individual cluster scores are visualized by color below:
 </p>
 
 ### Memory cutoff
-Currently, DBCV memory scales with the number of points in an individual cluster. A memory cutoff is necessary and should be set dependent on the machine being used. The default is set to a maximum of 15000 points allowed in a single cluster. The score will output an error when an individual cluster exceeds this cutoff.
+A memory cutoff is necessary to prevent attempts to score clusters that would exceed available memory. This cutoff should be set dependent on the machine being used. The default is set to a maximum of 25.0 GB. The score will output a -1 if the cutoff would be exceeded, along with an error message. To remove these error messages set batch_mode = True (Default is False).
 ```
-score = DBCV_score(X,labels, memory_cutoff = 10)
+score = DBCV_score(X,labels, memory_cutoff = 25.0)
 ```
-Output: Memory cutoff reached: automatically assigned a score of -1. Increase mem_cutoff to attempt to score.
 
 ## Relevant Citations
 #### Density Based Cluster Validation
