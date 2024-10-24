@@ -171,11 +171,15 @@ def format_data(
               cannot be scored.
     """
 
+    if sum(np.unique(labels) != -1) == 1:
+        return _NOT_ENOUGH_CLUSTERS, None, None, None, 0, 0, 0 
+
     n_samp = X.shape[0]
 
     # Initial check if all data is noise
     if np.sum(labels) == -n_samp:
         return _ALL_NOISE, None, None, None, 0, 0, 0
+
        
     d = X.shape[1] 
 
