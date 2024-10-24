@@ -1,6 +1,6 @@
-# DBCV
+# k-DBCV
 
-DBCV is an efficient python implementation of the density based cluster validation (DBCV) score proposed by Moulavi et al. (2014). 
+k-DBCV is an efficient python implementation of the density based cluster validation (DBCV) score proposed by Moulavi et al. (2014). 
 
 ## Getting Started
 ### Dependencies
@@ -77,7 +77,7 @@ Moulavi, D., Jaskowiak, P. A., Campello, R. J. G. B., Zimek, A. & Sander, J. Den
 ...Our citation here
 
 ## License
-DBCV* is licensed with an MIT license. See LICENSE file for more information.
+k-DBCV is licensed with an MIT license. See LICENSE file for more information.
 
 ## Referencing
 #### In addition to citing Moulavi et al., if you use this repository, please cite:
