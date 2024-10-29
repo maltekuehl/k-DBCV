@@ -72,7 +72,7 @@ score = DBCV_score(X,labels, memory_cutoff = 25.0)
 
 Moulavi, D., Jaskowiak, P. A., Campello, R. J. G. B., Zimek, A. & Sander, J. Density-based clustering validation. SIAM Int. Conf. Data Min. 2014, SDM 2014 2, 839–847 (2014)
 
-#### DBCV* implementation
+#### k-DBCV implementation
 ...Our citation here
 
 ## License
