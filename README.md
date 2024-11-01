@@ -9,11 +9,7 @@ k-DBCV is an efficient python implementation of the density based cluster valida
 ### Installation
 k-DBCV can be installed via pip:
 ```
-pip install ....?
-```
-or
-```
-pip install ....?
+check back later
 ```
 
 ## Usage
@@ -80,7 +76,8 @@ k-DBCV is licensed with an MIT license. See LICENSE file for more information.
 
 ## Referencing
 #### In addition to citing Moulavi et al., if you use this repository, please cite:
-...Our citation here
-
+```
+In preparation, check back later.
+```
 ## Contact 
-
+kaufmangroup.rubylab@gmail.com
