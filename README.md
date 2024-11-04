@@ -9,7 +9,7 @@ k-DBCV is an efficient python implementation of the density based cluster valida
 ### Installation
 k-DBCV can be installed via pip:
 ```
-check back later
+pip install kDBCV
 ```
 
 ## Usage
@@ -69,15 +69,16 @@ score = DBCV_score(X,labels, memory_cutoff = 25.0)
 Moulavi, D., Jaskowiak, P. A., Campello, R. J. G. B., Zimek, A. & Sander, J. Density-based clustering validation. SIAM Int. Conf. Data Min. 2014, SDM 2014 2, 839–847 (2014)
 
 #### k-DBCV implementation
-...Our citation here
+
+Hammer, J. L., Devanny, A. J. & Kaufman, L. J. Density-based optimization for unbiased, reproducible clustering applied to single molecule localization microscopy. Preprint at https://www.biorxiv.org/content/10.1101/2024.11.01.621498v1 (2024)
 
 ## License
 k-DBCV is licensed with an MIT license. See LICENSE file for more information.
 
 ## Referencing
-#### In addition to citing Moulavi et al., if you use this repository, please cite:
-```
-In preparation, check back later.
-```
+#### In addition to citing Moulavi et al., if you use this repository, please cite with the following (currently in preprint):
+
+Hammer, J. L., Devanny, A. J. & Kaufman, L. J. Density-based optimization for unbiased, reproducible clustering applied to single molecule localization microscopy. Preprint at https://www.biorxiv.org/content/10.1101/2024.11.01.621498v1 (2024)
+
 ## Contact 
 kaufmangroup.rubylab@gmail.com
