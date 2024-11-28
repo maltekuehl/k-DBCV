@@ -316,7 +316,7 @@ def intracluster_analysis(
     for i in range(N_clust):
         cluster = cluster_groups[i][:, :-1]
 
-        intraclustmatrix_condensed = pdist(cluster, metric='euclidean') 
+        intraclustmatrix_condensed = pdist(cluster, metric='cosine') 
         all_pts_core_dists = all_points_core_distance(intraclustmatrix_condensed, d)
         all_core_dists_matrix = np.tile(
             all_pts_core_dists, (all_pts_core_dists.shape[0], 1)
